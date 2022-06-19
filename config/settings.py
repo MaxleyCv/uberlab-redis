@@ -1,6 +1,9 @@
 import os
+from dotenv import load_dotenv
 
 from utils.metaclasses import Singleton
+
+load_dotenv()
 
 
 class Config(metaclass=Singleton):

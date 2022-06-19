@@ -24,3 +24,4 @@ class DataController:
             print('File status finished')
         else:
             print('This file was completed')
+        return 'Success'
