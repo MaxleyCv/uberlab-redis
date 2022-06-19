@@ -11,6 +11,6 @@ class Config(metaclass=Singleton):
             REDIS_PASSWORD=os.environ.get('REDIS_PASSWORD'),
             USE_CLOUD_EXTENSION=os.environ.get('USE_CLOUD_EXTENSION'),
             REDIS_PORT=os.environ.get('REDIS_PORT'),
-            READING_URL=os.environ.get('READING_URL')
+            READING_URL=f'{os.environ.get("READING_URL")}?$limit=1'
         )
         return settings_dict
