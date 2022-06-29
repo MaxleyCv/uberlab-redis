@@ -1,6 +1,9 @@
+import json
+
 import redis
 
 from config import REDIS_HOST, REDIS_PORT, REDIS_PASSWORD, DATASET_NAME, READING_URL
+from redis_config.event_hub import EventHubBroker
 from utils.metaclasses import Singleton
 
 
@@ -13,6 +16,7 @@ class RedisBase(metaclass=Singleton):
             ssl=True
         )
         self.client.set('index', 1)
+        self.event_hub = EventHubBroker()
 
     def connect(self):
         pinging = self.client.ping()
@@ -21,7 +25,7 @@ class RedisBase(metaclass=Singleton):
 
     def send_data(self, data):
         new_id = self.client.incr('index')
-        self.client.hset(READING_URL, new_id, data)
+        self.event_hub.send_data(data)
 
     def set_file_start(self, file):
         self.client.set(file, 'STARTED')
