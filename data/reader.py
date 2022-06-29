@@ -10,9 +10,9 @@ class DataReader(metaclass=Singleton):
         self.offset = 0
         self.client = Socrata("www.dallasopendata.com", None)
 
-    def read_all(self, result=True):
+    def read_all(self, result=[True, True]):
         while len(result):
-            result = self.read_next().values
+            result = self.read_next()
             for r1 in result:
                 yield r1
         self.offset = 0
@@ -20,4 +20,4 @@ class DataReader(metaclass=Singleton):
     def read_next(self):
         res = self.client.get(READING_URL, limit=2000, offset=self.offset)
         self.offset += 2000
-        return pd.DataFrame.from_records(res)
+        return res
